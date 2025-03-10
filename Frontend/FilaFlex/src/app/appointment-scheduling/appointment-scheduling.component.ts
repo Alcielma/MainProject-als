@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AppointmentService, AppointmentSchedule } from '../services/appointment.service';
+import { AppointmentService, AppointmentSchedule, Agendamento } from '../services/appointment.service';
 import { AuthService } from '../auth/services/auth.service';
-import { Location } from '@angular/common';  // Importado aqui
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-appointment-scheduling',
@@ -20,6 +20,7 @@ export class AppointmentSchedulingComponent implements OnInit {
   error: string | null = null;
   success = false;
   minDate: string = '';
+  agendamentos: Agendamento[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -27,7 +28,7 @@ export class AppointmentSchedulingComponent implements OnInit {
     private formBuilder: FormBuilder,
     private appointmentService: AppointmentService,
     private authService: AuthService,
-    private location: Location  // Adicionado aqui
+    private location: Location
   ) {
     this.appointmentForm = this.formBuilder.group({
       date: ['', Validators.required],
@@ -51,6 +52,8 @@ export class AppointmentSchedulingComponent implements OnInit {
         console.error('ID não encontrado nos query params');
       }
     });
+
+    this.loadAgendamentos(); // Certifique-se de que este método está sendo chamado
   }
 
   onSubmit(): void {
@@ -100,6 +103,7 @@ export class AppointmentSchedulingComponent implements OnInit {
         console.log('Resposta do agendamento:', response);
         this.success = true;
         this.loading = false;
+        this.loadAgendamentos(); // Recarregar agendamentos após agendar
       },
       error: (err) => {
         console.error('Erro detalhado:', err);
@@ -116,7 +120,30 @@ export class AppointmentSchedulingComponent implements OnInit {
     });
   }
 
+  loadAgendamentos(): void {
+    this.appointmentService.getAgendamentos().subscribe({
+      next: (data) => {
+        this.agendamentos = data;
+        console.log('Agendamentos carregados:', this.agendamentos); // Adicione um log para verificar os dados
+      },
+      error: (err) => {
+        console.error('Erro ao carregar agendamentos:', err);
+      }
+    });
+  }
+
+  deleteAgendamento(id: number): void {
+    this.appointmentService.deleteAgendamento(id).subscribe({
+      next: () => {
+        this.loadAgendamentos(); // Recarregar agendamentos após deletar
+      },
+      error: (err) => {
+        console.error('Erro ao deletar agendamento:', err);
+      }
+    });
+  }
+
   goBack(): void {
-    this.location.back();  // Implementado aqui
+    this.location.back();
   }
 }

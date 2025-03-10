@@ -13,11 +13,17 @@ export interface AppointmentSchedule {
   scheduledDateTime: string;
 }
 
+export interface Agendamento {
+  id: number;
+  descricao: string;
+  data: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AppointmentService {
-  private apiUrl = 'http://localhost:8080/appointment'; // Ajuste conforme necessário
+  private apiUrl = 'http://localhost:8080/appointment'; 
 
   constructor(private http: HttpClient) { }
 
@@ -28,6 +34,20 @@ export class AppointmentService {
     });
 
     return this.http.post(`${this.apiUrl}/create`, appointment, { headers })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+  //pegar o agendamento
+  getAgendamentos(): Observable<Agendamento[]> {
+    return this.http.get<Agendamento[]>(`${this.apiUrl}/all`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+  //deletar o agendamento
+  deleteAgendamento(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/id/${id}`)
       .pipe(
         catchError(this.handleError)
       );
