@@ -8,6 +8,8 @@ import { ServiceManagementComponent } from './service-management/service-managem
 import { authGuard } from './auth/guards/auth.guard';
 import { loginGuard } from './auth/guards/login.guard';
 import { AppointmentTypeDetailsComponent } from './appointment-type-details/appointment-type-details.component';
+import { AppointmentComponent } from './appointment/appointment.component';
+import { NewAppointmentTypeComponent } from './new-appointment-type/new-appointment-type.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate: [loginGuard] },
@@ -16,6 +18,8 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent, canActivate: [authGuard], data: { role: 'ADMIN' } },
   { path: 'service-management', component: ServiceManagementComponent, canActivate: [authGuard] },
   { path: 'appointment-details/:name', component: AppointmentTypeDetailsComponent, canActivate: [authGuard] },
+  { path: 'appointment/:id', component: AppointmentComponent, canActivate: [authGuard] },
+  { path: 'new-appointment-type', component: NewAppointmentTypeComponent, canActivate: [authGuard] },
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];

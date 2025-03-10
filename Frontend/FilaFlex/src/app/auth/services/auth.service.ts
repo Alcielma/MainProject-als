@@ -70,4 +70,8 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem('token');
   }
+  getUserId(): string | null {
+    // Implement the logic to get the user ID
+    return 'someUserId'; // Replace with actual logic
+  }
 }

@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AppointmentType, AppointmentTypeService } from '../services/appointment-type.service';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-appointment-type-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './appointment-type-details.component.html',
   styleUrl: './appointment-type-details.component.css'
 })

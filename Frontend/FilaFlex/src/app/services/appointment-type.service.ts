@@ -29,6 +29,8 @@ export class AppointmentTypeService {
 
   constructor(private http: HttpClient) {}
 
+
+  
   getAppointmentTypes(): Observable<AppointmentType[]> {
     return this.http.get<AppointmentType[]>(`${this.apiUrl}/all`).pipe(
       catchError(this.handleError)

@@ -1,0 +1,50 @@
+<p>new-appointment-type works!</p>
+<div class="container">
+    <button (click)="goBack()" class="back-button">← Voltar</button>
+    
+    <h2>Cadastrar Novo Serviço</h2>
+    
+    <form [formGroup]="appointmentTypeForm" (ngSubmit)="onSubmit()">
+      <label for="name">Nome:</label>
+      <input type="text" id="name" formControlName="name" required>
+      
+      <label for="description">Descrição:</label>
+      <textarea id="description" formControlName="description" required></textarea>
+      
+      <label for="category">Categorias (separadas por vírgula):</label>
+      <input type="text" id="category" formControlName="category" required>
+      
+      <label for="price">Preço:</label>
+      <input type="number" id="price" formControlName="price" required>
+      
+      <label for="estimatedTime">Tempo Estimado (minutos):</label>
+      <input type="number" id="estimatedTime" formControlName="estimatedTime" required>
+      
+      <label for="appointmentDate">Data do Agendamento:</label>
+      <input type="date" id="appointmentDate" formControlName="appointmentDate" required>
+      
+      <label for="requiredDocumentation">Documentação Necessária (separada por vírgula):</label>
+      <input type="text" id="requiredDocumentation" formControlName="requiredDocumentation">
+      
+      <fieldset formGroupName="adress">
+        <legend>Endereço</legend>
+        
+        <label for="number">Número:</label>
+        <input type="text" id="number" formControlName="number" required>
+        
+        <label for="street">Rua:</label>
+        <input type="text" id="street" formControlName="street" required>
+        
+        <label for="city">Cidade:</label>
+        <input type="text" id="city" formControlName="city" required>
+        
+        <label for="state">Estado:</label>
+        <input type="text" id="state" formControlName="state" required>
+        
+        <label for="country">País:</label>
+        <input type="text" id="country" formControlName="country" required>
+      </fieldset>
+      
+      <button type="submit" [disabled]="appointmentTypeForm.invalid">Cadastrar Serviço</button>
+    </form>
+  </div>
